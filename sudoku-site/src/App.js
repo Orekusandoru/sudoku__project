@@ -1,15 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
+import Board from './Components/Board';
 import './App.css';
-import {Button} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './Components/Header';
 
 function App() {
   return (
     <div>
-    <h1>s2s22d2s22</h1>
-    <Button variant = "primary">Button</Button>
+      
+      <Header/>
+    
     </div>
   );
 }
+
+
+
+
+
 
 export default App;
