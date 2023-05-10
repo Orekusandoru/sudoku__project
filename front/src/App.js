@@ -1,27 +1,19 @@
 import './App.css';
+import Sudo from './Sudo';
+import Header from './Header';
+import { Routes, Route } from "react-router-dom"
+import Layout from './Layout';
+import HomePage from "./Pages/HomePage";
 
 function App() {
   return (
-    <main>
-      <header>
-       
-        <a href="" className="logo" >
-          <img  src="../logo192.png" width="30" height="30" />   
-          Sudoku
-        </a>
-        <nav>
-          <a href="">Login</a>
-          <a href="">Register</a>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage/>} />
+        <Route path={"/login"} element={<div>login page</div>} />
+      </Route>
+    </Routes >
 
-        </nav>
-      </header>
-      <div className="post">
-
-        
-
-        <h1></h1>
-      </div>
-    </main>
   );
 }
 
