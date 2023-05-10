@@ -1,3 +1,7 @@
+*{
+   box-sizing: border-box;
+    
+}
 body{
     color: #222;
     
@@ -41,4 +45,34 @@ header nav{
 .cont{
     margin-left: 15px;
 
+}
+form.login, form.register{
+    max-width: 400px;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    
+}
+input{
+    
+    display: block;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 5px 10px;
+    border-style:ridge ;
+    border-color: rgb(146, 29, 29);
+    border-width: 5px;
+    
+    background-color: rgb(171, 214, 220);
+}
+button.btnlog{
+margin-top: 10px;
+  width: 90%;
+  height: 90%;
+  color: #ffffff;
+  background-color: #1b8f3e;
+  border-style:solid ;
+  border-width: 2px;
+  border-radius: 5px;
+  
 }

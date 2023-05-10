@@ -11,7 +11,7 @@ export default function Sudo() {
         </Link>
         <nav>
           <Link to="/login">Login</Link>
-          <Link to="/signup">Register</Link>
+          <Link to="/register">Register</Link>
         </nav>
       </header>
     </div>
