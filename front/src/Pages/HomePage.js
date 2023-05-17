@@ -1,6 +1,6 @@
 import Sudo from "../Sudo";
 
-export default function Layout() {
+export default function HomePage() {
     return (
         
        
