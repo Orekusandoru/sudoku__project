@@ -4,7 +4,8 @@ import Layout from './Layout';
 import HomePage from "./Pages/HomePage";
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
-import { UserContext, UserContextProvider } from './UserContext';
+import { UserContextProvider } from './UserContext';
+import CreateGame from './Pages/CreateGame';
 
 
 
@@ -16,6 +17,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/create" element={<CreateGame />} />
         </Route>
       </Routes >
     </UserContextProvider>

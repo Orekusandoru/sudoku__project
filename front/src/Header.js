@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate,useNavigate  } from "react-router-dom";
 import { UserContext } from "./UserContext";
 
 
+
 export default function Header() {
-  const {setUserInfo,userInfo} = useContext(UserContext);
+  const { setUserInfo, userInfo } = useContext(UserContext);
+  const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
       credentials: 'include',
@@ -16,15 +19,23 @@ export default function Header() {
     });
   }, []);
 
-  function logout(){
+  function logout() {
     fetch('http://localhost:4000/logout', {
       credentials: 'include',
       method: 'POST',
     })
     setUserInfo(null);
-  
+    setRedirect(true);
+
   }
-  const username  = userInfo?.username;
+
+  useEffect(() => {
+    if (redirect) {
+      navigate('/');
+    }
+  }, [redirect, navigate]);
+
+  const username = userInfo?.username;
   return (
     <div className="head">
       <header>
