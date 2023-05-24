@@ -46,11 +46,14 @@ return (
             <input type="text"
                 placeholder="username"
                 value={username}
-                onChange={ev => setUsername(ev.target.value)} />
+                onChange={ev => setUsername(ev.target.value)}
+                className="login-input" />
             <input type="password"
                 placeholder="password"
                 value={password}
-                onChange={ev => setPassword(ev.target.value)} />
+                onChange={ev => setPassword(ev.target.value)}
+                className="login-input" />
+                
             <button className="btnlog">Login</button>
         </form>
     </div>
