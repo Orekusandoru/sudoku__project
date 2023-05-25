@@ -35,10 +35,11 @@ header a {
 }
 
 header a.logo {
-
+    
     display: flex;
     align-items: center;
     font-weight: bold;
+    height: 30px;
 }
 
 header nav {
@@ -111,7 +112,7 @@ button.btnlog {
     color: white;
 }
 
-table{
+table.sudoku{
  border-collapse:   collapse;
  border: 3px solid rgb(78, 143, 200);
  background-color: rgb(78, 143, 200);

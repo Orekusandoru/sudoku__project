@@ -1,5 +1,7 @@
 export default function Sudo(){
     return(
-        <div>Are u sure?</div>
+        <div>Here is a little instruction how to play
+            Register, LogIn, and create a game
+        </div>
     );
 }

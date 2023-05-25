@@ -35,20 +35,22 @@ const initial3 = [
 ]
 let selectedGrid = []
 
-    selectedGrid =Rand();
+selectedGrid = Rand();
 
 
-    function Rand() {
-        const grids = [initial, initial2,initial3];
-        const randomIndex = Math.floor(Math.random() * grids.length);
-        const selectedGrid = grids[randomIndex];
-        return selectedGrid;
-    }
-var press =false
+function Rand() {
+    const grids = [initial, initial2, initial3];
+    const randomIndex = Math.floor(Math.random() * grids.length);
+    const selectedGrid = grids[randomIndex];
+    return selectedGrid;
+}
+var press = false
 export default function CreateGame() {
-    
+
 
     const [sudokuArr, setSudokuArr] = useState(getDeepCopy(selectedGrid));
+    const [isSolving, setIsSolving] = useState(false);
+
     function getDeepCopy(arr) {
         return JSON.parse(JSON.stringify(arr));
     }
@@ -160,48 +162,53 @@ export default function CreateGame() {
 
 
     }
+    const solveSudoku = () => {
 
-    function solveSudoku() {
         let sudoku = getDeepCopy(selectedGrid);
         press = true;
         solver(sudoku);
         setSudokuArr(sudoku);
+        setIsSolving(true);
     }
-    function resetSudoku() {
+
+    
+    const resetSudoku = () => {
+
         let sudoku = getDeepCopy(selectedGrid);
         setSudokuArr(sudoku);
+
     }
-    return (
-        <div className="App">
-            <div className="App-header">
-                <h3>Sudoku solver</h3>
-                <table>
-                    <tbody>
-                        {
-                            [0, 1, 2, 3, 4, 5, 6, 7, 8].map((row, rIndex) => {
-                                return <tr key={rIndex} className={(row + 1) % 3 === 0 ? 'bBorder' : ''}>
-                                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((col, cIndex) => {
-                                        return <td key={rIndex + cIndex} className={(col + 1) % 3 === 0 ? 'rBorder' : ''} >
-                                            <input onChange={(ev) => onInputChange(ev, row, col)}
-                                                value={sudokuArr[row][col] === -1 ? '' : sudokuArr[row][col]}
-                                                className="cellInput"
-                                                disabled={press ?  selectedGrid[row][col] !== 10:selectedGrid[row][col] !== -1 } />
-                                        </td>
-                                    })}
+return (
+    <div className="App">
+        <div className="App-header">
+            <h3>Sudoku solver</h3>
+            <table className="sudoku">
+                <tbody>
+                    {
+                        [0, 1, 2, 3, 4, 5, 6, 7, 8].map((row, rIndex) => {
+                            return <tr key={rIndex} className={(row + 1) % 3 === 0 ? 'bBorder' : ''}>
+                                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((col, cIndex) => {
+                                    return <td key={rIndex + cIndex} className={(col + 1) % 3 === 0 ? 'rBorder' : ''} >
+                                        <input onChange={(ev) => onInputChange(ev, row, col)}
+                                            value={sudokuArr[row][col] === -1 ? '' : sudokuArr[row][col]}
+                                            className="cellInput"
+                                            disabled={press ? selectedGrid[row][col] !== 10 : selectedGrid[row][col] !== -1} />
+                                    </td>
+                                })}
 
-                                </tr>
-                            })
-                        }
+                            </tr>
+                        })
+                    }
 
-                    </tbody>
-                </table>
-                <div className="buttonContainer">
-                    <button className="checkButton" onClick={checkSudoku}>Check</button>
-                    <button className="solveButton" onClick={solveSudoku}>Solve</button>
-                    <button className="resetButton" onClick={resetSudoku}>Reset</button>
-                </div>
+                </tbody>
+            </table>
+            <div className="buttonContainer">
+                <button className="checkButton" onClick={checkSudoku}>Check</button>
+                <button className="solveButton" onClick={solveSudoku}>Solve</button>
+                {!isSolving && (<button className="resetButton" onClick={resetSudoku}>Reset</button>)}
             </div>
         </div>
+    </div>
 
-    );
+);
 }

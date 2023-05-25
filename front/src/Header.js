@@ -7,6 +7,7 @@ import { UserContext } from "./UserContext";
 export default function Header() {
   const { setUserInfo, userInfo } = useContext(UserContext);
   const [redirect, setRedirect] = useState(false);
+  const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
@@ -26,13 +27,20 @@ export default function Header() {
     })
     setUserInfo(null);
     setRedirect(true);
+   
 
   }
+
+ 
+
+ 
 
   useEffect(() => {
     if (redirect) {
       navigate('/');
+      setCounter(counter + 1);
     }
+    
   }, [redirect, navigate]);
 
   const username = userInfo?.username;
@@ -41,7 +49,7 @@ export default function Header() {
       <header>
 
         <Link to="/" className="logo" >
-          <img src="../logo192.png" width="30" height="30" />
+          <img src="../6258392.png" width="50" height="50" />
           Sudoku
         </Link>
         <nav>
