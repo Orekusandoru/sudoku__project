@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const {Schema, model} = mongoose;
 
 const StatsSchema = new Schema({
-    rate: String,
-    fullName: String,
-    author: { type: Schema.Types.ObjectId, ref: 'User' },
+    rate: Number,
+    user: String,
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
 
 });
 

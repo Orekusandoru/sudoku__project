@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const User = require('./models/user');
+const User = require('./models/User');
+const Stats = require('./models/Stats');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
@@ -40,7 +41,7 @@ app.post('/login', async (req, res) => {
     jwt.sign({ username, id: userDoc._id }, scrkey, {}, (err, token) => {
       if (err) throw err;
       res.cookie('token', token).json({
-        id:userDoc._id,
+        id: userDoc._id,
         username,
       });
     });
@@ -58,8 +59,48 @@ app.get('/profile', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  res.cookie('token','').json('ok');
+  res.cookie('token', '').json('ok');
 })
+
+app.post('/createStats', async (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, scrkey, {}, async (err, info) => {
+    if (err) throw err;
+    const author =info.id; 
+    let statsDoc = await Stats.findOne({userId:author});
+    
+
+    if (Boolean(statsDoc)) {
+      const count = statsDoc.rate;
+      await statsDoc.updateOne({
+      rate: count+1,
+      user: info.username,
+      userId: info.id,
+      })
+    } else {
+        statsDoc = await Stats.create({
+        rate: 0,
+        user: info.username,
+        userId: info.id,
+      });
+    }
+    res.json(statsDoc);
+  }
+  )
+});
+app.get('/showStats', async (req, res) => {
+  const { token } = req.cookies;
+  jwt.verify(token, scrkey, {}, async (err, info) => {
+    if (err) throw err;
+    const statsDoc = await Stats.find({})
+    .sort({ rate: -1 })
+    res.json(statsDoc);
+    
+    
+  });
+});
+
+
 
 app.listen(4000);
 

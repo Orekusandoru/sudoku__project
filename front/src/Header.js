@@ -7,7 +7,6 @@ import { UserContext } from "./UserContext";
 export default function Header() {
   const { setUserInfo, userInfo } = useContext(UserContext);
   const [redirect, setRedirect] = useState(false);
-  const [counter, setCounter] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     fetch('http://localhost:4000/profile', {
@@ -26,7 +25,7 @@ export default function Header() {
       method: 'POST',
     })
     setUserInfo(null);
-    setRedirect(true);
+    navigate('/');
    
 
   }
@@ -35,13 +34,6 @@ export default function Header() {
 
  
 
-  useEffect(() => {
-    if (redirect) {
-      navigate('/');
-      setCounter(counter + 1);
-    }
-    
-  }, [redirect, navigate]);
 
   const username = userInfo?.username;
   return (

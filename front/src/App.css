@@ -159,3 +159,11 @@ td{
 .rBorder{
     border-right: 2px solid black;
 }
+.statscontent{
+    
+    
+    text-align: center;
+}
+.statsheader{
+    font-size: 50px;
+}

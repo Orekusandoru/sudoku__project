@@ -233,11 +233,17 @@ export default function CreateGame() {
         return res;
     }
 
-    function checkSudoku() {
+    async function checkSudoku(ev) {
         let sudoku = getDeepCopy(initial);
         solver(sudoku)
         let compare = compareSudokus(sudokuArr, sudoku)
         if (compare.isComplete) {
+            ev.preventDefault();
+            const response =  await fetch('http://localhost:4000/createStats', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+            });
             alert("You solved sudoku");
         } else if (compare.isSolveble) {
             alert("Sudoku is still unsolved, keep trying");
@@ -295,7 +301,7 @@ export default function CreateGame() {
                     </tbody>
                 </table>
                 <div className="buttonContainer">
-                    {!isSolving && (<button className="checkButton" onClick={checkSudoku}>Check</button>)}
+                    {isSolving && (<button className="checkButton" onClick={checkSudoku}>Check</button>)}
                     {!isSolving && (<button className="solveButton" onClick={solveSudoku}>Solve</button>)}
                     {!isSolving && (<button className="resetButton" onClick={resetSudoku}>Reset</button>)}
                     {isSolving && (<button className="resetButton" onClick={redirectHome}>Home</button>)}
