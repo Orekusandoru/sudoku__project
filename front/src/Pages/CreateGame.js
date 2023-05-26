@@ -1,55 +1,139 @@
 
-import { useState } from "react";
-const initial = [
-    [2, -1, -1, -1, -1, -1, -1, -1, -1],
-    [-1, -1, -1, 7, 2, -1, -1, -1, 8],
-    [-1, -1, -1, 6, -1, 8, -1, -1, -1],
-    [5, 8, -1, -1, -1, -1, -1, -1, 4],
-    [-1, 2, -1, 8, 9, 5, -1, 1, -1],
-    [6, -1, -1, -1, -1, -1, -1, 8, 9],
-    [-1, -1, -1, 5, -1, 7, -1, -1, -1],
-    [1, -1, -1, -1, 8, 4, -1, -1, -1],
-    [-1, -1, -1, -1, -1, -1, -1, -1, 7]
-]
-const initial2 = [
-    [-1, 5, -1, 9, -1, -1, -1, -1, -1],
-    [8, -1, -1, -1, 4, -1, 3, -1, 7],
-    [-1, -1, -1, 2, 8, -1, 1, 9, -1],
-    [5, 3, 8, 6, -1, 7, 9, 4, -1],
-    [-1, 2, -1, 3, -1, 1, -1, -1, -1],
-    [1, -1, 9, 8, -1, 4, 6, 2, 3],
-    [9, -1, 7, 4, -1, -1, -1, -1, -1],
-    [-1, 4, 5, -1, -1, -1, 2, -1, 9],
-    [-1, -1, -1, -1, 3, -1, -1, 7, -1]
-]
-const initial3 = [
-    [-1, -1, -1, -1, -1, -1, 1, -1, -1],
-    [-1, 4, 1, -1, -1, -1, -1, 5, -1],
-    [8, -1, -1, -1, 3, 1, -1, 4, -1],
-    [-1, -1, 2, -1, -1, -1, -1, -1, -1],
-    [-1, -1, 6, -1, 2, -1, 3, -1, -1],
-    [-1, -1, -1, -1, -1, -1, 9, -1, -1],
-    [-1, 1, -1, 3, 4, -1, -1, -1, 7],
-    [-1, 6, -1, -1, -1, -1, 4, 8, -1],
-    [-1, -1, 9, -1, -1, -1, -1, -1, -1]
-]
-let selectedGrid = []
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// const initial = [
+//     [2, -1, -1, -1, -1, -1, -1, -1, -1],
+//     [-1, -1, -1, 7, 2, -1, -1, -1, 8],
+//     [-1, -1, -1, 6, -1, 8, -1, -1, -1],
+//     [5, 8, -1, -1, -1, -1, -1, -1, 4],
+//     [-1, 2, -1, 8, 9, 5, -1, 1, -1],
+//     [6, -1, -1, -1, -1, -1, -1, 8, 9],
+//     [-1, -1, -1, 5, -1, 7, -1, -1, -1],
+//     [1, -1, -1, -1, 8, 4, -1, -1, -1],
+//     [-1, -1, -1, -1, -1, -1, -1, -1, 7]
+// ]
+// const initial2 = [
+//     [-1, 5, -1, 9, -1, -1, -1, -1, -1],
+//     [8, -1, -1, -1, 4, -1, 3, -1, 7],
+//     [-1, -1, -1, 2, 8, -1, 1, 9, -1],
+//     [5, 3, 8, 6, -1, 7, 9, 4, -1],
+//     [-1, 2, -1, 3, -1, 1, -1, -1, -1],
+//     [1, -1, 9, 8, -1, 4, 6, 2, 3],
+//     [9, -1, 7, 4, -1, -1, -1, -1, -1],
+//     [-1, 4, 5, -1, -1, -1, 2, -1, 9],
+//     [-1, -1, -1, -1, 3, -1, -1, 7, -1]
+// ]
+// const initial3 = [
+//     [-1, -1, -1, -1, -1, -1, 1, -1, -1],
+//     [-1, 4, 1, -1, -1, -1, -1, 5, -1],
+//     [8, -1, -1, -1, 3, 1, -1, 4, -1],
+//     [-1, -1, 2, -1, -1, -1, -1, -1, -1],
+//     [-1, -1, 6, -1, 2, -1, 3, -1, -1],
+//     [-1, -1, -1, -1, -1, -1, 9, -1, -1],
+//     [-1, 1, -1, 3, 4, -1, -1, -1, 7],
+//     [-1, 6, -1, -1, -1, -1, 4, 8, -1],
+//     [-1, -1, 9, -1, -1, -1, -1, -1, -1]
+// ]
+// let sudokuArr = []
 
-selectedGrid = Rand();
+// sudokuArr = Rand();
 
 
-function Rand() {
-    const grids = [initial, initial2, initial3];
-    const randomIndex = Math.floor(Math.random() * grids.length);
-    const selectedGrid = grids[randomIndex];
-    return selectedGrid;
-}
-var press = false
+// function Rand() {
+//     const grids = [initial, initial2, initial3];
+//     const randomIndex = Math.floor(Math.random() * grids.length);
+//     const sudokuArr = grids[randomIndex];
+//     return sudokuArr;
+// }
+
+const generateSudokuBoard = () => {
+    const solvedBoard = Array(9).fill().map(() => Array(9).fill(0));
+
+    const isValidPlacement = (board, row, col, num) => {
+
+        for (let i = 0; i < 9; i++) {
+            if (board[row][i] === num || board[i][col] === num) {
+                return false;
+            }
+        }
+
+        const startRow = Math.floor(row / 3) * 3;
+        const startCol = Math.floor(col / 3) * 3;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[startRow + i][startCol + j] === num) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    };
+
+    const solveSudoku = () => {
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (solvedBoard[row][col] === 0) {
+                    for (let num = 1; num <= 9; num++) {
+                        if (isValidPlacement(solvedBoard, row, col, num)) {
+                            solvedBoard[row][col] = num;
+                            if (solveSudoku()) {
+                                return true;
+                            } else {
+                                solvedBoard[row][col] = 0;
+                            }
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
+    solveSudoku();
+
+    const board = solvedBoard.map(row => [...row]);
+
+    const emptyCells = 45;
+    let count = 0;
+
+    while (count < emptyCells) {
+        const row = Math.floor(Math.random() * 9);
+        const col = Math.floor(Math.random() * 9);
+
+        if (board[row][col] !== 0) {
+            board[row][col] = -1;
+            count++;
+        }
+    }
+
+    return board;
+};
+
+
 export default function CreateGame() {
 
-
-    const [sudokuArr, setSudokuArr] = useState(getDeepCopy(selectedGrid));
+    const [initial] = useState(generateSudokuBoard());
+    const [sudokuArr, setSudokuArr] = useState(getDeepCopy(initial));
     const [isSolving, setIsSolving] = useState(false);
+    const [redirect, setRedirect] = useState(false);
+    const [counter, setCounter] = useState(0);
+    const navigate = useNavigate();
+
+    function redirectHome() {
+        setRedirect(true);
+    }
+    useEffect(() => {
+        if (redirect) {
+            navigate('/');
+            setCounter(counter + 1);
+        }
+
+    }, [redirect, navigate]);
+
+
+
 
     function getDeepCopy(arr) {
         return JSON.parse(JSON.stringify(arr));
@@ -148,8 +232,9 @@ export default function CreateGame() {
         }
         return res;
     }
+
     function checkSudoku() {
-        let sudoku = getDeepCopy(selectedGrid);
+        let sudoku = getDeepCopy(initial);
         solver(sudoku)
         let compare = compareSudokus(sudokuArr, sudoku)
         if (compare.isComplete) {
@@ -164,51 +249,60 @@ export default function CreateGame() {
     }
     const solveSudoku = () => {
 
-        let sudoku = getDeepCopy(selectedGrid);
-        press = true;
+        let sudoku = getDeepCopy(initial);
+
         solver(sudoku);
         setSudokuArr(sudoku);
+
         setIsSolving(true);
+        alert("You solved Sudoku by algorithm, it will not be counted in your statistics");
+
     }
 
-    
+
     const resetSudoku = () => {
 
-        let sudoku = getDeepCopy(selectedGrid);
+        let sudoku = getDeepCopy(initial);
         setSudokuArr(sudoku);
 
     }
-return (
-    <div className="App">
-        <div className="App-header">
-            <h3>Sudoku solver</h3>
-            <table className="sudoku">
-                <tbody>
-                    {
-                        [0, 1, 2, 3, 4, 5, 6, 7, 8].map((row, rIndex) => {
-                            return <tr key={rIndex} className={(row + 1) % 3 === 0 ? 'bBorder' : ''}>
-                                {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((col, cIndex) => {
-                                    return <td key={rIndex + cIndex} className={(col + 1) % 3 === 0 ? 'rBorder' : ''} >
-                                        <input onChange={(ev) => onInputChange(ev, row, col)}
-                                            value={sudokuArr[row][col] === -1 ? '' : sudokuArr[row][col]}
-                                            className="cellInput"
-                                            disabled={press ? selectedGrid[row][col] !== 10 : selectedGrid[row][col] !== -1} />
-                                    </td>
-                                })}
 
-                            </tr>
-                        })
-                    }
+    return (
+        <div className="App">
+            <div className="App-header">
+                <h3>Sudoku solver</h3>
+                <table className="sudoku">
+                    <tbody>
+                        {
 
-                </tbody>
-            </table>
-            <div className="buttonContainer">
-                <button className="checkButton" onClick={checkSudoku}>Check</button>
-                <button className="solveButton" onClick={solveSudoku}>Solve</button>
-                {!isSolving && (<button className="resetButton" onClick={resetSudoku}>Reset</button>)}
+                            [0, 1, 2, 3, 4, 5, 6, 7, 8].map((row, rIndex) => {
+                                return <tr key={rIndex} className={(row + 1) % 3 === 0 ? 'bBorder' : ''}>
+                                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((col, cIndex) => {
+                                        return <td key={rIndex + cIndex} className={(col + 1) % 3 === 0 ? 'rBorder' : ''} >
+                                            <input onChange={(ev) => onInputChange(ev, row, col)}
+                                                value={sudokuArr[row][col] === -1 ? '' : sudokuArr[row][col]}
+                                                className="cellInput"
+                                                disabled={initial[row][col] !== -1} />
+
+                                        </td>
+
+                                    })}
+
+                                </tr>
+                            })
+                        }
+
+                    </tbody>
+                </table>
+                <div className="buttonContainer">
+                    {!isSolving && (<button className="checkButton" onClick={checkSudoku}>Check</button>)}
+                    {!isSolving && (<button className="solveButton" onClick={solveSudoku}>Solve</button>)}
+                    {!isSolving && (<button className="resetButton" onClick={resetSudoku}>Reset</button>)}
+                    {isSolving && (<button className="resetButton" onClick={redirectHome}>Home</button>)}
+                </div>
             </div>
         </div>
-    </div>
-
-);
+    );
 }
+
+
