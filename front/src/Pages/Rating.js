@@ -18,22 +18,24 @@ export default function Rating() {
   return (
 
 
-    <div className="statscontent">
+    <div >
       <h3 className="statsheader">Stats players</h3>
-      <table>
-        <tr>
-          <th>Num</th>
-          <th>Nickname</th>
-          
-          <th>Solved sudokus</th>
-          
-        </tr>
-        <tbody>
-          {stats.length > 0 && stats.map((stat) => <Stat key={stat._id} {...stat} />
-          )}
+      <div >
+        <table class="table table-bordered table-dark ">
+          <tbody><tr>
+            <th>Num</th>
+            <th >Nickname</th>
 
-        </tbody>
-      </table>
+            <th>Solved sudokus</th>
+
+          </tr>
+
+            {stats.length > 0 && stats.map((stat, index) => <Stat key={stat._id} {...stat} index={index} />
+            )}
+
+          </tbody>
+        </table>
+      </div>
     </div>
 
   );

@@ -301,10 +301,10 @@ export default function CreateGame() {
                     </tbody>
                 </table>
                 <div className="buttonContainer">
-                    {isSolving && (<button className="checkButton" onClick={checkSudoku}>Check</button>)}
+                    {!isSolving && (<button className="checkButton" onClick={checkSudoku}>Check</button>)}
                     {!isSolving && (<button className="solveButton" onClick={solveSudoku}>Solve</button>)}
                     {!isSolving && (<button className="resetButton" onClick={resetSudoku}>Reset</button>)}
-                    {isSolving && (<button className="resetButton" onClick={redirectHome}>Home</button>)}
+                    {isSolving && (<button className="homeButton" onClick={redirectHome}>Home</button>)}
                 </div>
             </div>
         </div>
