@@ -22,6 +22,7 @@ export default function RegisterPage() {
             alert('registeration failed');
            
         }
+        
 
     }
 

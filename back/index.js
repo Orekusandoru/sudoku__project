@@ -35,7 +35,11 @@ app.post('/register', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   const userDoc = await User.findOne({ username });
+  if(userDoc  ==null){
+    res.status(400).json('wrong credentials');
+  }else{
   const passOk = bcrypt.compareSync(password, userDoc.password);
+  
   if (passOk) {
     // logged in
     jwt.sign({ username, id: userDoc._id }, scrkey, {}, (err, token) => {
@@ -48,13 +52,19 @@ app.post('/login', async (req, res) => {
   } else {
     res.status(400).json('wrong credentials');
   }
+}
 });
 app.get('/profile', (req, res) => {
   const { token } = req.cookies;
-  jwt.verify(token, scrkey, {}, (err, info) => {
-    if (err) throw err;
-    res.json(info);
-  });
+ 
+  if (token) {
+    jwt.verify(token, scrkey, {}, (err, info) => {
+        if (err) throw err;
+        res.json(info);
+    });
+} else {
+    res.status(401).json({ message: 'No token provided' });
+}
 
 });
 
@@ -90,6 +100,7 @@ app.post('/createStats', async (req, res) => {
 });
 app.get('/showStats', async (req, res) => {
   const { token } = req.cookies;
+  if (token) {
   jwt.verify(token, scrkey, {}, async (err, info) => {
     if (err) throw err;
     const statsDoc = await Stats.find({})
@@ -98,6 +109,10 @@ app.get('/showStats', async (req, res) => {
     
     
   });
+}else{
+  res.status(401).json({ message: 'No token provided' });
+
+}
 });
 
 

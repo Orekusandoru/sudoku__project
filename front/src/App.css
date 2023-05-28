@@ -13,7 +13,10 @@ main {
 
     margin: 0 auto
 }
-
+button:hover{
+    background-color:#344061;
+    transition: 0.7s;
+}
 header {
 
     padding: 10px;
@@ -55,6 +58,7 @@ form.login,
 form.register {
     max-width: 500px;
     height: 250px;
+    
     margin: 0 auto;
     display: grid;
     place-items: center;
@@ -77,13 +81,13 @@ form.register {
 
 button.btnlog {
     margin-top: 10px;
-    width: 90%;
+    width: 80%;
     height: 90%;
     color: #ffffff;
     background-color: #1b8f3e;
     border-style: solid;
     border-width: 2px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .cellInput {
