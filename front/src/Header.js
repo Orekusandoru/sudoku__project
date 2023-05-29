@@ -47,8 +47,8 @@ export default function Header() {
         <nav>
           {username && (
             <>
-              <Link to="/create">Create game</Link>
-              <a onClick={logout}>Logout</a>
+              <Link className="link-primary" to="/create">Create game</Link>
+              <a className="link-danger" onClick={logout}>Logout</a>
             </>
           )}
           {!username && (

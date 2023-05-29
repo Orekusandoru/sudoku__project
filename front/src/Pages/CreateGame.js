@@ -116,6 +116,7 @@ export default function CreateGame() {
 
     const [initial] = useState(generateSudokuBoard());
     const [sudokuArr, setSudokuArr] = useState(getDeepCopy(initial));
+    
     const [isSolving, setIsSolving] = useState(false);
     const [redirect, setRedirect] = useState(false);
     const [counter, setCounter] = useState(0);
@@ -144,7 +145,7 @@ export default function CreateGame() {
         if (val === -1 || val >= 1 && val <= 9) {
             grid[row][col] = val;
         }
-
+        
         setSudokuArr(grid);
     }
 

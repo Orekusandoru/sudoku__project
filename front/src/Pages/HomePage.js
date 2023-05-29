@@ -1,4 +1,4 @@
-import Sudo from "../Sudo";
+import UnloggedPage from "./UnloggedPage";
 import Rating from "./Rating";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../UserContext";
@@ -31,13 +31,13 @@ export default function HomePage() {
                         <div className="statscontent">
                             <Rating />
                         </div>
-                        <div className="homeStartButton" onClick={redirect}>Create game</div>
+                        <button className="homeStartButton" onClick={redirect}>Create game</button>
                     </div>
                 </>
             )}
             {!username && (
                 <>
-                    <Sudo />
+                    <UnloggedPage />
                 </>
             )}
         </div>

@@ -107,7 +107,7 @@ app.get('/showStats', async (req, res) => {
     .sort({ rate: -1 })
     res.json(statsDoc);
     
-    
+      
   });
 }else{
   res.status(401).json({ message: 'No token provided' });

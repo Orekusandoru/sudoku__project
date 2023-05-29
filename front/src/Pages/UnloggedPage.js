@@ -1,4 +1,8 @@
-export default function Sudo() {
+import { Link } from "react-router-dom";
+
+
+
+export default function UnloggedPage() {
     return (
         <div className="unlogHomepage">
 
@@ -6,10 +10,10 @@ export default function Sudo() {
                 
             </div>
             <div>
-                1.Register
+                1.<Link className="link-success" to="/register"> Register</Link>
             </div>
             <div>
-                2.LogIn
+                2.<Link className="link-success" to="/login"> LogIn</Link>
             </div>
             <div>
                 3. Create a game and just have fun!
