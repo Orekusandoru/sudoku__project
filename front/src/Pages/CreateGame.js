@@ -246,6 +246,7 @@ export default function CreateGame() {
                 credentials: 'include',
             });
             alert("You solved sudoku");
+            redirectHome();
         } else if (compare.isSolveble) {
             alert("Sudoku is still unsolved, keep trying");
         } else {
