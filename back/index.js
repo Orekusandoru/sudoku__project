@@ -89,7 +89,7 @@ app.post('/createStats', async (req, res) => {
       })
     } else {
         statsDoc = await Stats.create({
-        rate: 0,
+        rate: 1,
         user: info.username,
         userId: info.id,
       });
